@@ -3,22 +3,42 @@
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
  
+
 export async function addBookmark(formData: FormData) {
-  const supabase = createClient()
-  const text = formData.get('bookmark')
- 
-  if (text === null) return
- 
-  const { data: { user } } = await supabase.auth.getUser()
- 
-  if (user === null) return
+  const supabase = await createClient();
+  const url = formData.get('url');
+  let title = formData.get('title');
 
-    const url = text.toString();
-    const title = await getTitleFromUrl(url);
+  if (!url) return;
 
-  await supabase.from('bookmarks').insert({ title, url, user_id: user.id })
- 
-  revalidatePath('/')
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  // Check for duplicates
+  const { data: existing } = await supabase
+    .from('bookmarks')
+    .select('id')
+    .eq('user_id', user.id)
+    .eq('url', url.toString())
+    .single();
+
+  if (existing) {
+    return;
+  }
+
+  let finalTitle = title && title.toString().trim() !== '' ? title.toString() : url.toString();
+
+  await supabase.from('bookmarks').insert({ title: finalTitle, url: url.toString(), user_id: user.id });
+  revalidatePath('/');
+}
+
+export async function deleteBookmark(id: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  await supabase.from('bookmarks').delete().eq('id', id).eq('user_id', user.id);
+  revalidatePath('/');
 }
 
 async function getTitleFromUrl(url: string): Promise<string> {
