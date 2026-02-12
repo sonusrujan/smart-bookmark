@@ -27,9 +27,10 @@ export default function Login() {
       
       <AnimatedSection className="relative z-10 w-full max-w-md p-4">
         <GlassCard className="p-10 flex flex-col items-center text-center space-y-8 border-white/40 shadow-2xl">
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-700 flex items-center justify-center text-white text-3xl font-bold shadow-xl mb-2">
+          {/* <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-700 flex items-center justify-center text-white text-3xl font-bold shadow-xl mb-2">
             SB
-          </div>
+          </div> */}
+          <img src="/logo.png" alt="SB" className="w-20 h-20 rounded-2xl shadow-xl mb-2 object-cover" />
           
           <div className="space-y-2">
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">
