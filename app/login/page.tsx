@@ -23,8 +23,7 @@ export default function Login() {
   }
 
   return (
-    <div className={`min-h-screen flex items-center justify-center bg-gray-50 bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop')] bg-cover bg-center`}>
-      <div className="absolute inset-0 bg-white/40 backdrop-blur-3xl" />
+    <div className={`min-h-screen flex items-center justify-center`}>
       
       <AnimatedSection className="relative z-10 w-full max-w-md p-4">
         <GlassCard className="p-10 flex flex-col items-center text-center space-y-8 border-white/40 shadow-2xl">
